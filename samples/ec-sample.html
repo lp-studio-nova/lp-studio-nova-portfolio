@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIÈRE — Premium Skincare</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans+JP:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f5;--bg2:#f2ede6;--dark:#1a1510;--gold:#b8924a;--gold2:#d4aa6a;--gray:#8a8078;--border:#e8e0d5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--dark);font-family:'DM Sans',sans-serif;font-weight:300;}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 5vw;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(250,248,245,0.95);backdrop-filter:blur(10px);z-index:100;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:0.15em;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);text-decoration:none;}
+.nav-right{display:flex;gap:1.2rem;align-items:center;}
+.nav-icon{width:20px;height:20px;cursor:pointer;color:var(--dark);}
+.nav-cart{position:relative;}
+.cart-badge{position:absolute;top:-6px;right:-6px;background:var(--gold);color:#fff;width:16px;height:16px;border-radius:50%;font-size:0.55rem;display:flex;align-items:center;justify-content:center;}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;}
+.hero-left{background:var(--bg2);display:flex;flex-direction:column;justify-content:center;padding:5vw 4vw 5vw 5vw;}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-desc{font-size:0.88rem;color:var(--gray);line-height:2;max-width:380px;margin-bottom:2.5rem;}
+.hero-actions{display:flex;gap:1rem;align-items:center;}
+.btn-primary{padding:0.9rem 2.2rem;background:var(--dark);color:#fff;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:background 0.3s;}
+.btn-primary:hover{background:var(--gold);}
+.btn-ghost{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);text-decoration:none;border-bottom:1px solid var(--gray);padding-bottom:2px;}
+.hero-right{position:relative;overflow:hidden;background:#e8e0d5;}
+.hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8ddd0 0%,#d4c8b8 50%,#c8b89a 100%);}
+.hero-img-text{font-family:'Cormorant Garamond',serif;font-size:6rem;color:rgba(255,255,255,0.3);font-style:italic;}
+.hero-badge{position:absolute;bottom:2rem;right:2rem;background:var(--dark);color:#fff;padding:1rem;text-align:center;width:90px;height:90px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.hero-badge span:first-child{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold2);}
+.hero-badge span:last-child{font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+
+/* MARQUEE */
+.marquee-bar{background:var(--dark);padding:0.8rem 0;overflow:hidden;}
+.marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marquee 20s linear infinite;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+.marquee-dot{color:var(--gold);}
+
+/* FEATURED */
+.featured{padding:80px 5vw;}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;}
+.see-all{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);text-decoration:none;border-bottom:1px solid var(--border);}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+.product-card{cursor:pointer;}
+.product-img{aspect-ratio:3/4;background:var(--bg2);margin-bottom:1rem;position:relative;overflow:hidden;}
+.product-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform 0.6s;}
+.product-card:hover .product-img-inner{transform:scale(1.04);}
+.p-emoji{font-size:3.5rem;opacity:0.4;}
+.product-tag{position:absolute;top:0.8rem;left:0.8rem;background:var(--gold);color:#fff;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:0.3rem;}
+.product-sub{font-size:0.72rem;color:var(--gray);margin-bottom:0.5rem;}
+.product-price{font-size:0.9rem;font-weight:500;}
+.product-price span{font-size:0.65rem;color:var(--gray);margin-left:0.3rem;text-decoration:line-through;}
+
+/* BANNER */
+.banner{margin:0 5vw 80px;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;min-height:280px;}
+.banner-left{padding:3rem 3rem;display:flex;flex-direction:column;justify-content:center;}
+.banner-label{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.banner-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:1.5rem;}
+.banner-btn{display:inline-block;padding:0.8rem 2rem;border:1px solid var(--gold);color:var(--gold);font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;align-self:flex-start;}
+.banner-btn:hover{background:var(--gold);color:var(--dark);}
+.banner-right{background:linear-gradient(135deg,#2a2018 0%,#1a1510 100%);display:flex;align-items:center;justify-content:center;}
+.banner-visual{font-family:'Cormorant Garamond',serif;font-size:5rem;color:rgba(184,146,74,0.15);font-style:italic;text-align:center;line-height:1;}
+
+/* FEATURES */
+.features{padding:80px 5vw;background:var(--bg2);}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem;}
+.feat{text-align:center;padding:2rem 1rem;}
+.feat-icon{font-size:2rem;margin-bottom:1rem;}
+.feat-name{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:0.5rem;}
+.feat-desc{font-size:0.75rem;color:var(--gray);line-height:1.9;}
+
+/* REVIEW */
+.reviews{padding:80px 5vw;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.review-card{background:var(--bg2);padding:2rem;}
+.stars{color:var(--gold);font-size:0.8rem;margin-bottom:0.8rem;}
+.review-text{font-size:0.82rem;color:var(--gray);line-height:2;margin-bottom:1rem;}
+.reviewer{font-size:0.72rem;letter-spacing:0.08em;}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 5vw 2rem;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:1rem;}
+.footer-desc{font-size:0.75rem;line-height:2;}
+.footer-col h4{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:0.5rem;font-size:0.75rem;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:0.65rem;}
+
+/* Gradient placeholders */
+.pg1{background:linear-gradient(135deg,#f0e8dc 0%,#ddd0c0 100%);}
+.pg2{background:linear-gradient(135deg,#e8f0e8 0%,#c8d8c8 100%);}
+.pg3{background:linear-gradient(135deg,#e8e0f0 0%,#c8c0d8 100%);}
+.pg4{background:linear-gradient(135deg,#f0ece0 0%,#d8d0c0 100%);}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;}.hero-right{height:50vw;}
+  .products-grid,.features-grid{grid-template-columns:repeat(2,1fr);}
+  .reviews-grid,.banner{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">LUMIÈRE</div>
+  <ul class="nav-links">
+    <li><a href="#">スキンケア</a></li>
+    <li><a href="#">ボディケア</a></li>
+    <li><a href="#">セット</a></li>
+    <li><a href="#">ブランドについて</a></li>
+  </ul>
+  <div class="nav-right">
+    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <div class="nav-cart">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <div class="cart-badge">2</div>
+    </div>
+    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">New Collection 2025</p>
+    <h1 class="hero-title">肌に、<br><em>純粋な</em><br>贅沢を。</h1>
+    <p class="hero-desc">フランス産原料と最先端のスキンケア技術を融合。あなたの肌本来の輝きを引き出すプレミアムラインが登場しました。</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">コレクションを見る</a>
+      <a href="#" class="btn-ghost">詳しく</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <span class="hero-img-text">L</span>
+    </div>
+    <div class="hero-badge">
+      <span>No.1</span>
+      <span>Best Seller</span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span class="marquee-item">Free Shipping Over ¥10,000</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">無添加・パラベンフリー</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">全製品皮膚科テスト済み</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">30日間返品保証</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Free Shipping Over ¥10,000</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">無添加・パラベンフリー</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">全製品皮膚科テスト済み</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">30日間返品保証</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<section class="featured">
+  <div class="section-header">
+    <h2 class="section-title">人気商品</h2>
+    <a href="#" class="see-all">すべて見る</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img pg1">
+        <div class="product-img-inner"><span class="p-emoji">🧴</span></div>
+        <span class="product-tag">NEW</span>
+      </div>
+      <p class="product-name">グロウセラム EX</p>
+      <p class="product-sub">集中美容液 30ml</p>
+      <p class="product-price">¥12,800 <span>¥15,000</span></p>
+    </div>
+    <div class="product-card">
+      <div class="product-img pg2"><div class="product-img-inner"><span class="p-emoji">🌿</span></div></div>
+      <p class="product-name">モイスチャークリーム</p>
+      <p class="product-sub">保湿クリーム 50g</p>
+      <p class="product-price">¥9,800</p>
+    </div>
+    <div class="product-card">
+      <div class="product-img pg3">
+        <div class="product-img-inner"><span class="p-emoji">✨</span></div>
+        <span class="product-tag">BEST</span>
+      </div>
+      <p class="product-name">ブライトニングマスク</p>
+      <p class="product-sub">シートマスク 5枚入</p>
+      <p class="product-price">¥4,200</p>
+    </div>
+    <div class="product-card">
+      <div class="product-img pg4"><div class="product-img-inner"><span class="p-emoji">🫧</span></div></div>
+      <p class="product-name">ジェントルフォーム</p>
+      <p class="product-sub">洗顔フォーム 120ml</p>
+      <p class="product-price">¥3,600</p>
+    </div>
+  </div>
+</section>
+
+<div class="banner">
+  <div class="banner-left">
+    <p class="banner-label">Member's Special</p>
+    <h2 class="banner-title">会員登録で<br>初回15%OFF</h2>
+    <a href="#" class="banner-btn">今すぐ登録</a>
+  </div>
+  <div class="banner-right">
+    <div class="banner-visual">L<br>U<br>M</div>
+  </div>
+</div>
+
+<section class="features">
+  <h2 class="section-title" style="text-align:center;">LUMIÈREのこだわり</h2>
+  <div class="features-grid">
+    <div class="feat"><div class="feat-icon">🌱</div><h3 class="feat-name">天然成分</h3><p class="feat-desc">フランス産オーガニック原料を中心に使用。肌に優しい処方です。</p></div>
+    <div class="feat"><div class="feat-icon">🔬</div><h3 class="feat-name">皮膚科テスト済み</h3><p class="feat-desc">全製品で皮膚科学的なテストを実施。安心してお使いいただけます。</p></div>
+    <div class="feat"><div class="feat-icon">♻️</div><h3 class="feat-name">サステナブル</h3><p class="feat-desc">環境に配慮したパッケージを使用。地球にも肌にも優しい製品づくり。</p></div>
+    <div class="feat"><div class="feat-icon">🚚</div><h3 class="feat-name">送料無料</h3><p class="feat-desc">¥10,000以上のご購入で送料無料。定期購入は常に送料無料。</p></div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="section-header">
+    <h2 class="section-title">お客様の声</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">グロウセラムを使い始めて3週間、肌のトーンが明らかに明るくなりました。テクスチャーも軽くて使いやすいです。</p>
+      <p class="reviewer">M.S. — 30代女性</p>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">モイスチャークリームは今まで使った中で一番しっとりします。翌朝の肌がもちもちで感動しました。</p>
+      <p class="reviewer">K.T. — 40代女性</p>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">パッケージも高級感があって、プレゼントにも最適。定期購入に切り替えました。</p>
+      <p class="reviewer">A.N. — 20代女性</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">LUMIÈRE</div>
+      <p class="footer-desc">フランス生まれのプレミアムスキンケア。<br>肌本来の輝きを引き出すために。</p>
+    </div>
+    <div class="footer-col"><h4>Products</h4><ul><li>スキンケア</li><li>ボディケア</li><li>ギフトセット</li><li>定期購入</li></ul></div>
+    <div class="footer-col"><h4>Support</h4><ul><li>よくある質問</li><li>送料・配送</li><li>返品・交換</li><li>お問い合わせ</li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li>ブランドについて</li><li>プライバシー</li><li>特定商取引法</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 LUMIÈRE. All rights reserved.</span>
+    <span>Powered by Kairos</span>
+  </div>
+</footer>
+</body>
+</html>

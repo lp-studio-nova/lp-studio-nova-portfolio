@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowDesk — プロジェクト管理システム</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--sidebar:#161b22;--card:#1c2128;--card2:#21262d;
+  --border:#30363d;--cyan:#58a6ff;--green:#3fb950;--yellow:#d29922;
+  --red:#f85149;--purple:#bc8cff;--white:#e6edf3;--gray:#8b949e;--gray2:#656d76;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:0.875rem;display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;height:100vh;overflow-y:auto;}
+.sidebar-logo{padding:1.2rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;}
+.logo-icon{width:28px;height:28px;background:var(--cyan);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;color:#0d1117;}
+.logo-text{font-weight:600;font-size:0.95rem;}
+.sidebar-nav{padding:0.8rem 0;}
+.nav-section{margin-bottom:1.5rem;}
+.nav-section-title{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray2);padding:0 1rem 0.4rem;}
+.nav-item{display:flex;align-items:center;gap:0.6rem;padding:0.5rem 1rem;color:var(--gray);cursor:pointer;transition:all 0.2s;border-radius:0;font-size:0.82rem;}
+.nav-item:hover{background:var(--card2);color:var(--white);}
+.nav-item.active{background:rgba(88,166,255,0.1);color:var(--cyan);border-left:2px solid var(--cyan);}
+.nav-icon{font-size:0.9rem;width:16px;text-align:center;}
+.nav-badge{margin-left:auto;background:var(--cyan);color:#0d1117;font-size:0.6rem;padding:0.1rem 0.4rem;border-radius:10px;font-weight:600;}
+.nav-badge.yellow{background:var(--yellow);}
+.sidebar-user{padding:1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:0.7rem;margin-top:auto;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;color:#fff;flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-name{font-size:0.78rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.user-role{font-size:0.65rem;color:var(--gray2);}
+
+/* MAIN */
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+
+/* TOPBAR */
+.topbar{padding:0.8rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--sidebar);position:sticky;top:0;z-index:50;}
+.topbar-left{display:flex;align-items:center;gap:1rem;}
+.breadcrumb{display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--gray);}
+.breadcrumb .current{color:var(--white);}
+.search-box{display:flex;align-items:center;gap:0.5rem;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.8rem;width:200px;}
+.search-box input{background:none;border:none;outline:none;color:var(--white);font-size:0.78rem;font-family:inherit;width:100%;}
+.search-box input::placeholder{color:var(--gray2);}
+.topbar-right{display:flex;align-items:center;gap:0.8rem;}
+.top-btn{background:var(--card2);border:1px solid var(--border);color:var(--white);padding:0.4rem 0.9rem;border-radius:6px;font-size:0.75rem;cursor:pointer;font-family:inherit;}
+.top-btn.primary{background:var(--cyan);border-color:var(--cyan);color:#0d1117;font-weight:500;}
+.notif-btn{width:32px;height:32px;border-radius:6px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;}
+.notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;background:var(--red);border-radius:50%;}
+
+/* CONTENT */
+.content{padding:1.5rem;flex:1;}
+.page-header{margin-bottom:1.5rem;}
+.page-title{font-size:1.2rem;font-weight:600;margin-bottom:0.3rem;}
+.page-sub{font-size:0.78rem;color:var(--gray);}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;}
+.stat-label{font-size:0.72rem;color:var(--gray);margin-bottom:0.6rem;}
+.stat-value{font-size:1.6rem;font-weight:600;margin-bottom:0.3rem;}
+.stat-change{font-size:0.7rem;display:flex;align-items:center;gap:0.3rem;}
+.stat-change.up{color:var(--green);}
+.stat-change.down{color:var(--red);}
+.stat-change.neutral{color:var(--gray);}
+
+/* GRID */
+.content-grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1rem;}
+
+/* TABLE */
+.table-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.card-header{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:0.88rem;font-weight:600;}
+.card-action{font-size:0.72rem;color:var(--cyan);cursor:pointer;}
+.table{width:100%;border-collapse:collapse;}
+.table th{padding:0.6rem 1.2rem;text-align:left;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray2);border-bottom:1px solid var(--border);}
+.table td{padding:0.75rem 1.2rem;font-size:0.78rem;border-bottom:1px solid rgba(48,54,61,0.5);}
+.table tr:last-child td{border-bottom:none;}
+.table tr:hover td{background:rgba(255,255,255,0.02);}
+.status-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.2rem 0.6rem;border-radius:12px;font-size:0.65rem;font-weight:500;}
+.status-badge.active{background:rgba(63,185,80,0.15);color:var(--green);}
+.status-badge.pending{background:rgba(210,153,34,0.15);color:var(--yellow);}
+.status-badge.review{background:rgba(88,166,255,0.15);color:var(--cyan);}
+.status-badge.closed{background:rgba(139,148,158,0.15);color:var(--gray);}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.avatar-group{display:flex;}
+.sm-avatar{width:22px;height:22px;border-radius:50%;border:2px solid var(--card);margin-left:-6px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:600;}
+.sm-avatar:first-child{margin-left:0;}
+.av1{background:linear-gradient(135deg,#58a6ff,#bc8cff);}
+.av2{background:linear-gradient(135deg,#3fb950,#58a6ff);}
+.av3{background:linear-gradient(135deg,#d29922,#f85149);}
+.av4{background:linear-gradient(135deg,#bc8cff,#f85149);}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:2px;}
+
+/* ACTIVITY */
+.activity-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.activity-list{padding:0.5rem 0;}
+.activity-item{display:flex;gap:0.8rem;padding:0.7rem 1.2rem;align-items:flex-start;}
+.activity-item:hover{background:rgba(255,255,255,0.02);}
+.act-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;}
+.act-content{flex:1;min-width:0;}
+.act-text{font-size:0.75rem;line-height:1.6;color:var(--gray);}
+.act-text strong{color:var(--white);}
+.act-time{font-size:0.65rem;color:var(--gray2);margin-top:0.2rem;font-family:'JetBrains Mono',monospace;}
+
+/* BOTTOM ROW */
+.bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.mini-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:1rem;}
+.bar{flex:1;border-radius:3px 3px 0 0;min-height:4px;transition:opacity 0.2s;}
+.bar:hover{opacity:0.8;}
+.bar.cyan{background:var(--cyan);}
+.bar.purple{background:var(--purple);}
+.chart-labels{display:flex;justify-content:space-between;margin-top:0.4rem;}
+.chart-label{font-size:0.6rem;color:var(--gray2);font-family:'JetBrains Mono',monospace;}
+
+/* KANBAN PREVIEW */
+.kanban-preview{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.kanban-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;padding:1rem;}
+.kanban-col-title{font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:0.6rem;display:flex;align-items:center;justify-content:space-between;}
+.k-count{background:var(--card2);padding:0.1rem 0.5rem;border-radius:10px;font-size:0.6rem;}
+.kanban-task{background:var(--card2);border:1px solid var(--border);border-radius:5px;padding:0.6rem;margin-bottom:0.4rem;cursor:pointer;transition:border-color 0.2s;}
+.kanban-task:hover{border-color:var(--cyan);}
+.kt-title{font-size:0.72rem;margin-bottom:0.4rem;line-height:1.4;}
+.kt-meta{display:flex;justify-content:space-between;align-items:center;}
+.kt-tag{font-size:0.58rem;padding:0.15rem 0.5rem;border-radius:3px;}
+.kt-tag.design{background:rgba(188,140,255,0.15);color:var(--purple);}
+.kt-tag.dev{background:rgba(88,166,255,0.15);color:var(--cyan);}
+.kt-tag.bug{background:rgba(248,81,73,0.15);color:var(--red);}
+.kt-date{font-size:0.6rem;color:var(--gray2);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">F</div>
+    <span class="logo-text">FlowDesk</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-item active"><span class="nav-icon">⊞</span> ダッシュボード</div>
+      <div class="nav-item"><span class="nav-icon">📋</span> プロジェクト <span class="nav-badge">8</span></div>
+      <div class="nav-item"><span class="nav-icon">✓</span> タスク <span class="nav-badge yellow">12</span></div>
+      <div class="nav-item"><span class="nav-icon">📅</span> カレンダー</div>
+      <div class="nav-item"><span class="nav-icon">💬</span> メッセージ</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">管理</div>
+      <div class="nav-item"><span class="nav-icon">👥</span> メンバー</div>
+      <div class="nav-item"><span class="nav-icon">📊</span> レポート</div>
+      <div class="nav-item"><span class="nav-icon">⚙</span> 設定</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">プロジェクト</div>
+      <div class="nav-item"><span style="width:8px;height:8px;border-radius:50%;background:#3fb950;display:inline-block;"></span> ECサイトリニューアル</div>
+      <div class="nav-item"><span style="width:8px;height:8px;border-radius:50%;background:#58a6ff;display:inline-block;"></span> 採用サイト制作</div>
+      <div class="nav-item"><span style="width:8px;height:8px;border-radius:50%;background:#bc8cff;display:inline-block;"></span> 管理システム開発</div>
+    </div>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">YK</div>
+    <div class="user-info">
+      <div class="user-name">山内 雄也</div>
+      <div class="user-role">Project Manager</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="breadcrumb">
+        <span>Home</span><span>/</span><span class="current">ダッシュボード</span>
+      </div>
+      <div class="search-box">
+        <span style="color:var(--gray2);font-size:0.8rem;">🔍</span>
+        <input type="text" placeholder="検索...">
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="top-btn">エクスポート</button>
+      <button class="top-btn primary">+ 新規タスク</button>
+      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-title">ダッシュボード</h1>
+      <p class="page-sub">2025年4月 — 進行中のプロジェクト概況</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <p class="stat-label">進行中のタスク</p>
+        <p class="stat-value">24</p>
+        <p class="stat-change up">↑ 3 今週追加</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">完了タスク（今月）</p>
+        <p class="stat-value">87</p>
+        <p class="stat-change up">↑ 12% 先月比</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">アクティブメンバー</p>
+        <p class="stat-value">6</p>
+        <p class="stat-change neutral">変動なし</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">遅延プロジェクト</p>
+        <p class="stat-value" style="color:var(--yellow);">2</p>
+        <p class="stat-change down">↑ 1 先週比</p>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="table-card">
+        <div class="card-header">
+          <span class="card-title">プロジェクト一覧</span>
+          <span class="card-action">すべて見る →</span>
+        </div>
+        <table class="table">
+          <thead>
+            <tr><th>プロジェクト</th><th>ステータス</th><th>担当</th><th>進捗</th><th>期日</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div style="font-weight:500;">ECサイトリニューアル</div><div style="font-size:0.65rem;color:var(--gray);">Next.js / Stripe</div></td>
+              <td><span class="status-badge active"><span class="status-dot"></span>進行中</span></td>
+              <td><div class="avatar-group"><div class="sm-avatar av1">YK</div><div class="sm-avatar av2">TM</div><div class="sm-avatar av3">SR</div></div></td>
+              <td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:72%;background:var(--cyan);"></div></div><span style="font-size:0.65rem;color:var(--gray);font-family:JetBrains Mono,monospace;">72%</span></div></td>
+              <td style="font-size:0.72rem;color:var(--gray);font-family:JetBrains Mono,monospace;">05/15</td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:500;">採用サイト制作</div><div style="font-size:0.65rem;color:var(--gray);">WordPress</div></td>
+              <td><span class="status-badge review"><span class="status-dot"></span>レビュー中</span></td>
+              <td><div class="avatar-group"><div class="sm-avatar av2">HN</div><div class="sm-avatar av4">KS</div></div></td>
+              <td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:90%;background:var(--purple);"></div></div><span style="font-size:0.65rem;color:var(--gray);font-family:JetBrains Mono,monospace;">90%</span></div></td>
+              <td style="font-size:0.72rem;color:var(--gray);font-family:JetBrains Mono,monospace;">04/28</td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:500;">AIチャットボット導入</div><div style="font-size:0.65rem;color:var(--gray);">LangChain / LINE</div></td>
+              <td><span class="status-badge pending"><span class="status-dot"></span>待機中</span></td>
+              <td><div class="avatar-group"><div class="sm-avatar av1">YK</div><div class="sm-avatar av3">TM</div></div></td>
+              <td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:35%;background:var(--yellow);"></div></div><span style="font-size:0.65rem;color:var(--gray);font-family:JetBrains Mono,monospace;">35%</span></div></td>
+              <td style="font-size:0.72rem;color:var(--yellow);font-family:JetBrains Mono,monospace;">06/30</td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:500;">LP制作（医療機器）</div><div style="font-size:0.65rem;color:var(--gray);">HTML/CSS</div></td>
+              <td><span class="status-badge closed"><span class="status-dot"></span>完了</span></td>
+              <td><div class="avatar-group"><div class="sm-avatar av4">KS</div></div></td>
+              <td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:100%;background:var(--green);"></div></div><span style="font-size:0.65rem;color:var(--gray);font-family:JetBrains Mono,monospace;">100%</span></div></td>
+              <td style="font-size:0.72rem;color:var(--gray);font-family:JetBrains Mono,monospace;">04/10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="activity-card">
+        <div class="card-header">
+          <span class="card-title">最近のアクティビティ</span>
+          <span class="card-action">すべて</span>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item"><div class="act-avatar av1">YK</div><div class="act-content"><div class="act-text"><strong>山内</strong>がタスク「トップページデザイン」を完了しました</div><div class="act-time">2分前</div></div></div>
+          <div class="activity-item"><div class="act-avatar av2">TM</div><div class="act-content"><div class="act-text"><strong>田村</strong>がコメントを追加しました</div><div class="act-time">18分前</div></div></div>
+          <div class="activity-item"><div class="act-avatar av3">SR</div><div class="act-content"><div class="act-text"><strong>鈴木</strong>が「Stripeテスト実装」を開始しました</div><div class="act-time">1時間前</div></div></div>
+          <div class="activity-item"><div class="act-avatar av4">KS</div><div class="act-content"><div class="act-text"><strong>小林</strong>がLP制作プロジェクトを完了としてマーク</div><div class="act-time">3時間前</div></div></div>
+          <div class="activity-item"><div class="act-avatar av2">HN</div><div class="act-content"><div class="act-text"><strong>橋本</strong>が採用サイトをレビュー待ちに変更</div><div class="act-time">昨日</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="mini-chart">
+        <div class="card-header" style="padding:0 0 0.8rem;border:none;margin-bottom:0;">
+          <span class="card-title">タスク完了推移（週次）</span>
+        </div>
+        <div class="chart-bars">
+          <div class="bar cyan" style="height:45%;"></div>
+          <div class="bar purple" style="height:60%;"></div>
+          <div class="bar cyan" style="height:35%;"></div>
+          <div class="bar purple" style="height:80%;"></div>
+          <div class="bar cyan" style="height:55%;"></div>
+          <div class="bar purple" style="height:70%;"></div>
+          <div class="bar cyan" style="height:90%;"></div>
+          <div class="bar purple" style="height:65%;"></div>
+        </div>
+        <div class="chart-labels"><span class="chart-label">W1</span><span class="chart-label">W2</span><span class="chart-label">W3</span><span class="chart-label">W4</span><span class="chart-label">W5</span><span class="chart-label">W6</span><span class="chart-label">W7</span><span class="chart-label">W8</span></div>
+      </div>
+
+      <div class="kanban-preview">
+        <div class="card-header"><span class="card-title">カンバンボード</span><span class="card-action">展開 →</span></div>
+        <div class="kanban-cols">
+          <div>
+            <div class="kanban-col-title">Todo <span class="k-count">4</span></div>
+            <div class="kanban-task"><div class="kt-title">Figmaデザイン確認</div><div class="kt-meta"><span class="kt-tag design">Design</span><span class="kt-date">04/26</span></div></div>
+            <div class="kanban-task"><div class="kt-title">API仕様書作成</div><div class="kt-meta"><span class="kt-tag dev">Dev</span><span class="kt-date">04/28</span></div></div>
+          </div>
+          <div>
+            <div class="kanban-col-title">In Progress <span class="k-count">3</span></div>
+            <div class="kanban-task"><div class="kt-title">決済フロー実装</div><div class="kt-meta"><span class="kt-tag dev">Dev</span><span class="kt-date">05/02</span></div></div>
+            <div class="kanban-task"><div class="kt-title">SP対応修正</div><div class="kt-meta"><span class="kt-tag bug">Bug</span><span class="kt-date">04/25</span></div></div>
+          </div>
+          <div>
+            <div class="kanban-col-title">Done <span class="k-count">7</span></div>
+            <div class="kanban-task" style="opacity:0.6;"><div class="kt-title">ワイヤーフレーム</div><div class="kt-meta"><span class="kt-tag design">Design</span><span class="kt-date">04/20</span></div></div>
+            <div class="kanban-task" style="opacity:0.6;"><div class="kt-title">DB設計</div><div class="kt-meta"><span class="kt-tag dev">Dev</span><span class="kt-date">04/18</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

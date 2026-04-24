@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShiftLink — シフト管理アプリ</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f7ff;--white:#ffffff;--dark:#0f172a;
+  --primary:#6366f1;--primary2:#818cf8;--primary-light:#eef2ff;
+  --green:#10b981;--yellow:#f59e0b;--red:#ef4444;
+  --gray:#64748b;--gray2:#94a3b8;--border:#e2e8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--dark);font-family:'Plus Jakarta Sans',sans-serif;}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5vw;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.nav-logo{display:flex;align-items:center;gap:0.6rem;}
+.logo-icon{width:32px;height:32px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem;}
+.logo-text{font-weight:700;font-size:1rem;color:var(--dark);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:0.82rem;color:var(--gray);text-decoration:none;font-weight:500;transition:color 0.2s;}
+.nav-links a:hover{color:var(--primary);}
+.nav-right{display:flex;gap:0.6rem;}
+.btn-nav{padding:0.5rem 1.2rem;font-size:0.78rem;font-family:inherit;font-weight:600;cursor:pointer;border-radius:8px;transition:all 0.2s;}
+.btn-nav-ghost{background:transparent;border:1px solid var(--border);color:var(--dark);}
+.btn-nav-primary{background:var(--primary);border:1px solid var(--primary);color:#fff;}
+.btn-nav-primary:hover{background:#4f51d9;}
+
+/* HERO */
+.hero{padding:80px 5vw 60px;text-align:center;background:linear-gradient(180deg,#f0f2ff 0%,var(--bg) 100%);}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--primary-light);border:1px solid rgba(99,102,241,0.2);padding:0.35rem 1rem;border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--primary);margin-bottom:1.5rem;}
+.hero-title{font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem;letter-spacing:-0.03em;color:var(--dark);}
+.hero-title .accent{color:var(--primary);}
+.hero-desc{font-size:0.95rem;color:var(--gray);line-height:1.9;max-width:500px;margin:0 auto 2rem;font-weight:400;}
+.hero-btns{display:flex;gap:0.8rem;justify-content:center;margin-bottom:1rem;}
+.btn-hero{padding:0.85rem 2rem;font-size:0.88rem;font-family:inherit;font-weight:700;cursor:pointer;border-radius:10px;transition:all 0.2s;}
+.btn-hero-primary{background:var(--primary);border:none;color:#fff;box-shadow:0 4px 12px rgba(99,102,241,0.3);}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,0.35);}
+.btn-hero-store{background:var(--dark);border:none;color:#fff;display:flex;align-items:center;gap:0.5rem;}
+.hero-note{font-size:0.72rem;color:var(--gray2);}
+.hero-ratings{display:flex;gap:2rem;justify-content:center;margin-top:2rem;}
+.rating-item{text-align:center;}
+.rating-num{font-size:1.4rem;font-weight:800;color:var(--dark);}
+.rating-label{font-size:0.68rem;color:var(--gray2);}
+
+/* APP MOCKUP */
+.mockup-section{padding:60px 5vw;display:flex;justify-content:center;}
+.mockup-frame{background:var(--white);border-radius:24px;box-shadow:0 20px 60px rgba(99,102,241,0.15),0 4px 20px rgba(0,0,0,0.08);width:340px;overflow:hidden;border:1px solid var(--border);}
+.mockup-status{background:var(--dark);padding:0.6rem 1.2rem;display:flex;justify-content:space-between;align-items:center;}
+.status-time{font-size:0.75rem;color:#fff;font-weight:600;}
+.status-icons{font-size:0.75rem;color:#fff;}
+.mockup-nav{background:var(--white);padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.mockup-title{font-size:0.95rem;font-weight:700;}
+.mockup-badge{background:var(--primary-light);color:var(--primary);font-size:0.65rem;font-weight:600;padding:0.2rem 0.6rem;border-radius:10px;}
+.mockup-body{padding:1rem;}
+.shift-date-header{font-size:0.7rem;font-weight:600;color:var(--gray2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.8rem;}
+.shift-row{display:flex;align-items:center;gap:0.8rem;background:var(--bg);border-radius:10px;padding:0.7rem;margin-bottom:0.5rem;}
+.shift-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+.sa1{background:#ddd8fe;color:#6366f1;}
+.sa2{background:#d1fae5;color:#059669;}
+.sa3{background:#fef3c7;color:#d97706;}
+.sa4{background:#ffe4e6;color:#e11d48;}
+.shift-info{flex:1;}
+.shift-name{font-size:0.78rem;font-weight:600;margin-bottom:0.1rem;}
+.shift-time{font-size:0.65rem;color:var(--gray);}
+.shift-status{font-size:0.62rem;font-weight:600;padding:0.15rem 0.5rem;border-radius:5px;}
+.ss-confirmed{background:#d1fae5;color:#059669;}
+.ss-pending{background:#fef3c7;color:#d97706;}
+.ss-off{background:#f1f5f9;color:var(--gray2);}
+.mockup-bottom{display:flex;border-top:1px solid var(--border);padding:0.6rem;}
+.bottom-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;padding:0.4rem;font-size:0.6rem;color:var(--gray2);cursor:pointer;}
+.bottom-tab.active{color:var(--primary);}
+.tab-icon{font-size:1rem;}
+
+/* FEATURES */
+.features-section{padding:80px 5vw;background:var(--white);}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:3rem auto 0;}
+.feat-card{padding:1.8rem;border-radius:16px;border:1px solid var(--border);transition:box-shadow 0.3s,transform 0.3s;}
+.feat-card:hover{box-shadow:0 8px 24px rgba(99,102,241,0.1);transform:translateY(-3px);}
+.feat-icon-b{width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem;}
+.feat-name-b{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;}
+.feat-desc-b{font-size:0.78rem;color:var(--gray);line-height:1.8;}
+
+/* TESTIMONIALS */
+.testimonials{padding:80px 5vw;background:var(--bg);}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1000px;margin:3rem auto 0;}
+.test-card{background:var(--white);border-radius:16px;padding:1.8rem;border:1px solid var(--border);}
+.test-stars{color:var(--yellow);font-size:0.8rem;margin-bottom:0.8rem;}
+.test-text{font-size:0.8rem;color:var(--gray);line-height:1.9;margin-bottom:1rem;}
+.test-author{display:flex;align-items:center;gap:0.6rem;}
+.test-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;}
+.test-name{font-size:0.78rem;font-weight:600;}
+.test-role{font-size:0.65rem;color:var(--gray2);}
+
+/* PRICING */
+.pricing{padding:80px 5vw;background:var(--white);text-align:center;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:900px;margin:3rem auto 0;}
+.plan-card{border-radius:16px;padding:2rem;border:2px solid var(--border);text-align:left;position:relative;transition:border-color 0.3s;}
+.plan-card.featured{border-color:var(--primary);background:var(--primary-light);}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:0.65rem;font-weight:700;padding:0.25rem 1rem;border-radius:20px;white-space:nowrap;}
+.plan-name{font-size:0.78rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;}
+.plan-price{font-size:2.2rem;font-weight:800;margin-bottom:0.3rem;}
+.plan-price span{font-size:0.85rem;font-weight:400;color:var(--gray);}
+.plan-desc{font-size:0.75rem;color:var(--gray);margin-bottom:1.5rem;}
+.plan-features{list-style:none;margin-bottom:1.5rem;}
+.plan-features li{font-size:0.78rem;padding:0.4rem 0;display:flex;gap:0.5rem;align-items:center;color:var(--gray);}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+.plan-btn{width:100%;padding:0.75rem;font-family:inherit;font-weight:700;font-size:0.82rem;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+.plan-btn-primary{background:var(--primary);border:none;color:#fff;}
+.plan-btn-outline{background:transparent;border:2px solid var(--border);color:var(--dark);}
+
+/* CTA */
+.cta-section{padding:80px 5vw;background:var(--primary);text-align:center;}
+.cta-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;margin-bottom:1rem;}
+.cta-desc{font-size:0.88rem;color:rgba(255,255,255,0.8);margin-bottom:2rem;}
+.btn-white{padding:0.9rem 2.2rem;background:#fff;color:var(--primary);font-family:inherit;font-weight:700;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;transition:transform 0.2s;}
+.btn-white:hover{transform:translateY(-2px);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:3rem 5vw 1.5rem;}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo-w{display:flex;align-items:center;gap:0.5rem;}
+.footer-logo-icon{width:24px;height:24px;background:var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.7rem;}
+.footer-logo-text{font-size:0.9rem;font-weight:700;color:#fff;}
+.footer-copy{font-size:0.68rem;color:#64748b;}
+
+.section-title-b{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;text-align:center;letter-spacing:-0.02em;}
+.section-desc-b{font-size:0.85rem;color:var(--gray);text-align:center;margin-top:0.8rem;}
+
+@media(max-width:768px){
+  .feat-grid,.test-grid,.pricing-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .hero-ratings{gap:1rem;}
+  .mockup-frame{width:100%;max-width:340px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">S</div>
+    <span class="logo-text">ShiftLink</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">機能</a></li>
+    <li><a href="#">料金</a></li>
+    <li><a href="#">事例</a></li>
+    <li><a href="#">サポート</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-nav btn-nav-ghost">ログイン</button>
+    <button class="btn-nav btn-nav-primary">無料で試す</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🎉 Android・iOS 完全対応</div>
+  <h1 class="hero-title">シフト管理を、<br><span class="accent">もっとかんたんに。</span></h1>
+  <p class="hero-desc">ShiftLinkはスタッフの希望収集・シフト作成・通知・勤怠管理をすべてスマホで完結できるアプリです。紙・Excelのシフト表から卒業しましょう。</p>
+  <div class="hero-btns">
+    <button class="btn-hero btn-hero-primary">無料で始める</button>
+    <button class="btn-hero btn-hero-store">🤖 Google Play</button>
+  </div>
+  <p class="hero-note">クレジットカード不要 · 30日間無料 · いつでも解約OK</p>
+  <div class="hero-ratings">
+    <div class="rating-item"><div class="rating-num">4.8</div><div class="rating-label">★ App評価</div></div>
+    <div class="rating-item"><div class="rating-num">3,200+</div><div class="rating-label">導入店舗</div></div>
+    <div class="rating-item"><div class="rating-num">90%</div><div class="rating-label">作成時間削減</div></div>
+  </div>
+</section>
+
+<section class="mockup-section">
+  <div class="mockup-frame">
+    <div class="mockup-status">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="mockup-nav">
+      <span class="mockup-title">今週のシフト</span>
+      <span class="mockup-badge">4/21〜4/27</span>
+    </div>
+    <div class="mockup-body">
+      <div class="shift-date-header">月曜日 — 4月21日</div>
+      <div class="shift-row">
+        <div class="shift-avatar sa1">YK</div>
+        <div class="shift-info"><div class="shift-name">山内 雄也</div><div class="shift-time">10:00 〜 19:00</div></div>
+        <span class="shift-status ss-confirmed">確定</span>
+      </div>
+      <div class="shift-row">
+        <div class="shift-avatar sa2">TM</div>
+        <div class="shift-info"><div class="shift-name">田村 誠</div><div class="shift-time">13:00 〜 21:00</div></div>
+        <span class="shift-status ss-confirmed">確定</span>
+      </div>
+      <div class="shift-row">
+        <div class="shift-avatar sa3">SR</div>
+        <div class="shift-info"><div class="shift-name">鈴木 凜</div><div class="shift-time">希望提出待ち</div></div>
+        <span class="shift-status ss-pending">未提出</span>
+      </div>
+      <div class="shift-date-header" style="margin-top:1rem;">火曜日 — 4月22日</div>
+      <div class="shift-row">
+        <div class="shift-avatar sa4">KN</div>
+        <div class="shift-info"><div class="shift-name">小林 直樹</div><div class="shift-time">休日</div></div>
+        <span class="shift-status ss-off">休み</span>
+      </div>
+      <div class="shift-row">
+        <div class="shift-avatar sa1">YK</div>
+        <div class="shift-info"><div class="shift-name">山内 雄也</div><div class="shift-time">09:00 〜 18:00</div></div>
+        <span class="shift-status ss-confirmed">確定</span>
+      </div>
+    </div>
+    <div class="mockup-bottom">
+      <div class="bottom-tab active"><span class="tab-icon">📅</span>シフト</div>
+      <div class="bottom-tab"><span class="tab-icon">👥</span>スタッフ</div>
+      <div class="bottom-tab"><span class="tab-icon">📊</span>集計</div>
+      <div class="bottom-tab"><span class="tab-icon">⚙</span>設定</div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <h2 class="section-title-b">ShiftLinkの機能</h2>
+  <p class="section-desc-b">シフト管理に必要な機能をすべて搭載</p>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon-b">📲</div><h3 class="feat-name-b">希望収集の自動化</h3><p class="feat-desc-b">スタッフはアプリから希望日時を入力するだけ。LINEやプッシュ通知で締切をリマインドします。</p></div>
+    <div class="feat-card"><div class="feat-icon-b">🤖</div><h3 class="feat-name-b">AI自動シフト作成</h3><p class="feat-desc-b">希望・スキル・法定労働時間を考慮してAIが自動でシフトを生成。手作業の8割を削減。</p></div>
+    <div class="feat-card"><div class="feat-icon-b">🔔</div><h3 class="feat-name-b">プッシュ通知</h3><p class="feat-desc-b">シフト確定・変更・お知らせをプッシュ通知で即時連絡。全員への一斉通知にも対応。</p></div>
+    <div class="feat-card"><div class="feat-icon-b">⏱</div><h3 class="feat-name-b">打刻・勤怠管理</h3><p class="feat-desc-b">GPS打刻・QRコード打刻に対応。勤務時間・残業・遅刻を自動集計します。</p></div>
+    <div class="feat-card"><div class="feat-icon-b">📊</div><h3 class="feat-name-b">勤怠レポート</h3><p class="feat-desc-b">月次の勤務時間・人件費・シフト充足率をグラフで可視化。CSV出力で給与計算にも連携。</p></div>
+    <div class="feat-card"><div class="feat-icon-b">🔄</div><h3 class="feat-name-b">シフト交換申請</h3><p class="feat-desc-b">スタッフ間でのシフト交換をアプリ内で完結。管理者の承認フローも設定できます。</p></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <h2 class="section-title-b">ご利用者の声</h2>
+  <div class="test-grid">
+    <div class="test-card"><div class="test-stars">★★★★★</div><p class="test-text">以前はExcelで2〜3時間かかっていたシフト作成が30分以内に終わるようになりました。スタッフからも「使いやすい」と好評です。</p><div class="test-author"><div class="test-avatar" style="background:#ede9fe;color:#7c3aed;">Y</div><div><div class="test-name">山田 真一</div><div class="test-role">飲食店オーナー</div></div></div></div>
+    <div class="test-card"><div class="test-stars">★★★★★</div><p class="test-text">バイトのシフト希望集めが本当に楽になりました。LINEで連絡する手間がなくなり、プッシュ通知で全員に一斉送信できるのが助かります。</p><div class="test-author"><div class="test-avatar" style="background:#d1fae5;color:#059669;">K</div><div><div class="test-name">木村 晴香</div><div class="test-role">美容院マネージャー</div></div></div></div>
+    <div class="test-card"><div class="test-stars">★★★★☆</div><p class="test-text">勤怠データのCSV出力が地味に便利で、給与計算ソフトへの転記作業がなくなりました。投資対効果が非常に高いです。</p><div class="test-author"><div class="test-avatar" style="background:#fef3c7;color:#d97706;">S</div><div><div class="test-name">佐藤 健二</div><div class="test-role">小売店舗マネージャー</div></div></div></div>
+  </div>
+</section>
+
+<section class="pricing">
+  <h2 class="section-title-b">シンプルな料金体系</h2>
+  <p class="section-desc-b">すべてのプランで30日間無料トライアル</p>
+  <div class="pricing-grid">
+    <div class="plan-card">
+      <p class="plan-name">Starter</p>
+      <p class="plan-price">¥2,980<span>/月</span></p>
+      <p class="plan-desc">小規模店舗向け</p>
+      <ul class="plan-features"><li>スタッフ最大10名</li><li>シフト自動作成</li><li>プッシュ通知</li><li>CSVエクスポート</li></ul>
+      <button class="plan-btn plan-btn-outline">無料で試す</button>
+    </div>
+    <div class="plan-card featured">
+      <div class="plan-badge">🔥 人気No.1</div>
+      <p class="plan-name">Growth</p>
+      <p class="plan-price">¥7,980<span>/月</span></p>
+      <p class="plan-desc">中規模店舗・チェーン向け</p>
+      <ul class="plan-features"><li>スタッフ最大50名</li><li>AI最適シフト生成</li><li>打刻・勤怠管理</li><li>勤怠レポート</li><li>シフト交換申請</li></ul>
+      <button class="plan-btn plan-btn-primary">無料で試す</button>
+    </div>
+    <div class="plan-card">
+      <p class="plan-name">Enterprise</p>
+      <p class="plan-price">要相談</p>
+      <p class="plan-desc">大規模・多店舗向け</p>
+      <ul class="plan-features"><li>スタッフ無制限</li><li>多店舗一括管理</li><li>給与計算連携</li><li>専任サポート</li><li>カスタム開発対応</li></ul>
+      <button class="plan-btn plan-btn-outline">お問い合わせ</button>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-title">まずは無料で体験する</h2>
+  <p class="cta-desc">30日間完全無料。クレジットカード不要。今すぐ始められます。</p>
+  <button class="btn-white">ShiftLinkを無料で試す →</button>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo-w"><div class="footer-logo-icon">S</div><span class="footer-logo-text">ShiftLink</span></div>
+    <p class="footer-copy">© 2025 ShiftLink. Powered by Kairos</p>
+  </div>
+</footer>
+</body>
+</html>

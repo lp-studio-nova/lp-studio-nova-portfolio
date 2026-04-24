@@ -40,8 +40,7 @@ nav.scrolled{background:rgba(2,4,8,0.92);backdrop-filter:blur(20px);border-botto
 .work-bg{position:absolute;inset:0;transition:transform 0.6s;}
 .work-card:hover .work-bg{transform:scale(1.05);}
 .work-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,229,255,0.012) 3px,rgba(0,229,255,0.012) 4px);}
-.work-glow{position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.25;transition:opacity 0.4s;}
-.work-card:hover .work-glow{opacity:0.6;}
+.work-card:hover .work-glow{opacity:0.6 !important;}
 .work-corner{position:absolute;top:0;left:0;width:18px;height:18px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);opacity:0;transition:opacity 0.3s;}
 .work-corner2{position:absolute;bottom:0;right:0;width:18px;height:18px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);opacity:0;transition:opacity 0.3s;}
 .work-card:hover .work-corner,.work-card:hover .work-corner2{opacity:1;}
@@ -51,7 +50,6 @@ nav.scrolled{background:rgba(2,4,8,0.92);backdrop-filter:blur(20px);border-botto
 .work-title-c{font-family:"Orbitron",sans-serif;font-size:0.82rem;font-weight:600;margin-bottom:0.25rem;color:var(--white);line-height:1.4;}
 .work-sub-c{font-size:0.68rem;color:var(--gray);line-height:1.6;}
 .work-year{font-family:"Share Tech Mono",monospace;font-size:0.58rem;color:rgba(0,229,255,0.4);}
-.work-coming{font-family:"Share Tech Mono",monospace;font-size:0.62rem;color:rgba(179,71,255,0.6);letter-spacing:0.15em;margin-top:0.3rem;}
 .work-link-btn{font-family:"Share Tech Mono",monospace;font-size:0.62rem;color:var(--cyan);text-decoration:none;letter-spacing:0.1em;border:1px solid rgba(0,229,255,0.4);padding:0.25rem 0.7rem;transition:all 0.3s;white-space:nowrap;}
 .work-link-btn:hover{background:var(--cyan);color:var(--bg);}
 .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
@@ -83,7 +81,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 5vw;
     <li><a href="kairos-corporate.html#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
-
 <section class="page-hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
@@ -93,64 +90,60 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 5vw;
     <h1>制作<span class="accent">実績</span></h1>
   </div>
 </section>
-
 <section style="background:var(--bg);position:relative;z-index:2;">
   <div class="inner">
     <div class="filter-bar"><button class="filter-btn active" data-cat="ALL">ALL</button><button class="filter-btn" data-cat="CORPORATE">CORPORATE</button><button class="filter-btn" data-cat="LP">LP</button><button class="filter-btn" data-cat="SYSTEM">SYSTEM</button><button class="filter-btn" data-cat="EC">EC</button><button class="filter-btn" data-cat="APP">APP</button><button class="filter-btn" data-cat="AI">AI</button></div>
-    <p class="works-count" id="works-count">// Showing 11 projects</p>
+    <p class="works-count" id="works-count">// Showing 9 projects</p>
     <div class="works-grid" id="works-grid">
-    <div class="work-card reveal rd1" data-cat="LP" style="">
+    <div class="work-card reveal rd1" data-cat="LP">
       <div class="work-bg" style="background:linear-gradient(135deg,#150010 0%,#220020 50%,#330035 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(179,71,255,0.3),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(179,71,255,0.3),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ LP ]</span>
-          <p class="work-title-c">ライバー・チャットレディ 求人LP</p>
-          <p class="work-sub-c">HTML / CSS / LINE連携 / レスポンシブ</p>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
-            <p class="work-year">2025</p>
-            <a href="https://kairos-epsilon.github.io/kairos-portfolio/lp-firstplace/" target="_blank" class="work-link-btn">サイトを見る →</a>
-          </div>
+      <div class="work-overlay">
+        <span class="work-cat">[ LP ]</span>
+        <p class="work-title-c">ライバー・チャットレディ 求人LP — First Place</p>
+        <p class="work-sub-c">HTML / CSS / LINE連携 / レスポンシブ</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="lp-firstplace/" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
-    <div class="work-card reveal rd2" data-cat="CORPORATE" style="">
+    <div class="work-card reveal rd2" data-cat="CORPORATE">
       <div class="work-bg" style="background:linear-gradient(135deg,#020d1a 0%,#051525 50%,#072240 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,229,255,0.3),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,229,255,0.3),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ CORPORATE ]</span>
-          <p class="work-title-c">Web制作会社 コーポレートサイト（Nexus Works）</p>
-          <p class="work-sub-c">HTML / CSS / JavaScript / アニメーション</p>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
-            <p class="work-year">2025</p>
-            <a href="https://kairos-epsilon.github.io/kairos-portfolio/sample-corporate.html" target="_blank" class="work-link-btn">サイトを見る →</a>
-          </div>
+      <div class="work-overlay">
+        <span class="work-cat">[ CORPORATE ]</span>
+        <p class="work-title-c">Web制作会社 コーポレートサイト — Nexus Works</p>
+        <p class="work-sub-c">HTML / CSS / JavaScript / スクロールアニメーション</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="sample-corporate.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
-    <div class="work-card reveal rd3" data-cat="CORPORATE" style="">
+    <div class="work-card reveal rd3" data-cat="CORPORATE">
       <div class="work-bg" style="background:linear-gradient(135deg,#001a0d 0%,#002a14 50%,#003d1e 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,255,136,0.3),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,255,136,0.3),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ CORPORATE ]</span>
-          <p class="work-title-c">Web制作スタジオ コーポレートサイト（Kairos）</p>
-          <p class="work-sub-c">HTML / CSS / JavaScript / サイバーUI / パーティクル</p>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
-            <p class="work-year">2025</p>
-            <a href="https://kairos-epsilon.github.io/kairos-portfolio/kairos-corporate.html" target="_blank" class="work-link-btn">サイトを見る →</a>
-          </div>
+      <div class="work-overlay">
+        <span class="work-cat">[ CORPORATE ]</span>
+        <p class="work-title-c">Web制作スタジオ コーポレートサイト — Kairos</p>
+        <p class="work-sub-c">HTML / CSS / JavaScript / サイバーUI / パーティクル</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="kairos-corporate.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
     <div class="work-card reveal rd1" data-cat="CORPORATE">
       <div class="work-bg" style="background:linear-gradient(135deg,#1a1208 0%,#2d2010 50%,#3d2e18 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(180,140,80,0.35),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(180,140,80,0.3),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
       <div class="work-overlay">
         <span class="work-cat">[ CORPORATE ]</span>
@@ -177,87 +170,73 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 5vw;
         </div>
       </div>
     </div>
-    <div class="work-card reveal rd1" data-cat="SYSTEM" style="opacity:0.5;">
+    <div class="work-card reveal rd3" data-cat="SYSTEM">
       <div class="work-bg" style="background:linear-gradient(135deg,#0a0218 0%,#120230 50%,#1a0a45 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(179,71,255,0.2),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(179,71,255,0.35),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ SYSTEM ]</span>
-          <p class="work-title-c">Webアプリ・システム開発 実績</p>
-          <p class="work-coming">// Coming Soon</p>
+      <div class="work-overlay">
+        <span class="work-cat">[ SYSTEM ]</span>
+        <p class="work-title-c">プロジェクト管理システム — FlowDesk</p>
+        <p class="work-sub-c">React / ダッシュボード / カンバン / 勤怠管理</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="samples/system-sample.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
-    <div class="work-card reveal rd2" data-cat="EC" style="opacity:0.5;">
-      <div class="work-bg" style="background:linear-gradient(135deg,#000a15 0%,#001428 50%,#002040 100%);"></div>
+    <div class="work-card reveal rd1" data-cat="EC">
+      <div class="work-bg" style="background:linear-gradient(135deg,#1a1208 0%,#2d2010 50%,#3d2e18 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,229,255,0.2),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(184,146,74,0.3),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ EC ]</span>
-          <p class="work-title-c">EC・決済システム 実績</p>
-          <p class="work-coming">// Coming Soon</p>
+      <div class="work-overlay">
+        <span class="work-cat">[ EC ]</span>
+        <p class="work-title-c">プレミアムスキンケア ECサイト — LUMIÈRE</p>
+        <p class="work-sub-c">EC / 会員機能 / 決済 / カート / レビュー</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="samples/ec-sample.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
-    <div class="work-card reveal rd3" data-cat="AI" style="opacity:0.5;">
-      <div class="work-bg" style="background:linear-gradient(135deg,#001a0d 0%,#002a14 50%,#003d1e 100%);"></div>
+    <div class="work-card reveal rd2" data-cat="AI">
+      <div class="work-bg" style="background:linear-gradient(135deg,#020810 0%,#041020 50%,#061a3a 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,255,136,0.2),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(79,142,247,0.35),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ AI ]</span>
-          <p class="work-title-c">AI・自動化ツール 実績</p>
-          <p class="work-coming">// Coming Soon</p>
+      <div class="work-overlay">
+        <span class="work-cat">[ AI ]</span>
+        <p class="work-title-c">AIチャットボットプラットフォーム — SYNAPSE AI</p>
+        <p class="work-sub-c">LangChain / RAG / GPT-4 / SaaS / チャットUI</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="samples/ai-sample.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
+      </div>
     </div>
-    <div class="work-card reveal rd1" data-cat="APP" style="opacity:0.5;">
-      <div class="work-bg" style="background:linear-gradient(135deg,#150010 0%,#220020 50%,#330035 100%);"></div>
+    <div class="work-card reveal rd3" data-cat="APP">
+      <div class="work-bg" style="background:linear-gradient(135deg,#0d0a1e 0%,#1a1040 50%,#251560 100%);"></div>
       <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(179,71,255,0.2),transparent 70%);"></div>
+      <div class="work-glow" style="background:radial-gradient(circle,rgba(99,102,241,0.35),transparent 70%);position:absolute;width:140px;height:140px;border-radius:50%;top:5%;right:5%;opacity:0.3;transition:opacity 0.4s;"></div>
       <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ APP ]</span>
-          <p class="work-title-c">アプリ開発 実績</p>
-          <p class="work-coming">// Coming Soon</p>
+      <div class="work-overlay">
+        <span class="work-cat">[ APP ]</span>
+        <p class="work-title-c">シフト管理アプリ — ShiftLink</p>
+        <p class="work-sub-c">Flutter / Firebase / プッシュ通知 / 勤怠管理</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+          <p class="work-year">2025</p>
+          <a href="samples/app-sample.html" target="_blank" class="work-link-btn">サイトを見る →</a>
         </div>
-    </div>
-    <div class="work-card reveal rd2" data-cat="LP" style="opacity:0.5;">
-      <div class="work-bg" style="background:linear-gradient(135deg,#0a0800 0%,#1a1200 50%,#2a1e00 100%);"></div>
-      <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 70%);"></div>
-      <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ LP ]</span>
-          <p class="work-title-c">LP制作 実績（追加予定）</p>
-          <p class="work-coming">// Coming Soon</p>
-        </div>
-    </div>
-    <div class="work-card reveal rd3" data-cat="CORPORATE" style="opacity:0.5;">
-      <div class="work-bg" style="background:linear-gradient(135deg,#020d1a 0%,#051525 50%,#072240 100%);"></div>
-      <div class="work-scan"></div>
-      <div class="work-glow" style="background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 70%);"></div>
-      <div class="work-corner"></div><div class="work-corner2"></div>
-      
-        <div class="work-overlay">
-          <span class="work-cat">[ CORPORATE ]</span>
-          <p class="work-title-c">コーポレートHP 実績（追加予定）</p>
-          <p class="work-coming">// Coming Soon</p>
-        </div>
+      </div>
     </div>
     </div>
   </div>
 </section>
-
 <footer>
   <a href="kairos-corporate.html" class="f-logo">KAIROS<span>_</span></a>
   <p class="f-copy">© 2025 Kairos. All rights reserved.</p>
 </footer>
-
 <script>
 const cursor=document.getElementById("cursor");
 const ring=document.getElementById("cursor-ring");
