@@ -1207,24 +1207,24 @@ footer{
           </div>
         </div>
       </div>
-      <div class="contact-form reveal rd2">
+      <form class="contact-form reveal rd2" action="https://formspree.io/f/xwvaygne" method="POST" id="contactForm">
         <div class="form-row">
           <div class="fg">
             <label>お名前</label>
-            <input type="text" placeholder="山田 太郎">
+            <input type="text" name="name" placeholder="山田 太郎" required>
           </div>
           <div class="fg">
             <label>会社名</label>
-            <input type="text" placeholder="株式会社〇〇">
+            <input type="text" name="company" placeholder="株式会社〇〇">
           </div>
         </div>
         <div class="fg">
           <label>メールアドレス</label>
-          <input type="email" placeholder="info@example.com">
+          <input type="email" name="email" placeholder="info@example.com" required>
         </div>
         <div class="fg">
           <label>ご相談の種別</label>
-          <select>
+          <select name="type" required>
             <option value="">選択してください</option>
             <option>LP・コーポレートサイト制作</option>
             <option>Webアプリ・システム開発</option>
@@ -1236,10 +1236,11 @@ footer{
         </div>
         <div class="fg">
           <label>ご相談内容</label>
-          <textarea placeholder="ご要望・背景・スケジュール感などをお聞かせください。"></textarea>
+          <textarea name="message" placeholder="ご要望・背景・スケジュール感などをお聞かせください。" required></textarea>
         </div>
-        <button class="btn-submit">[ SEND MESSAGE ]</button>
-      </div>
+        <button class="btn-submit" type="submit" id="submitBtn">[ SEND MESSAGE ]</button>
+      <div id="formMsg" style="display:none;margin-top:1rem;padding:0.8rem 1rem;font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;border-radius:2px;"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -1389,6 +1390,48 @@ window.addEventListener('scroll', () => {
 if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
   document.querySelectorAll('.work-card').forEach(card => {
     card.style.cursor = 'pointer';
+  });
+}
+
+
+// Contact form — Formspree
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMsg = document.getElementById('formMsg');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.textContent = '[ SENDING... ]';
+    submitBtn.disabled = true;
+
+    const data = new FormData(contactForm);
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        formMsg.style.display = 'block';
+        formMsg.style.background = 'rgba(0,255,136,0.08)';
+        formMsg.style.border = '1px solid rgba(0,255,136,0.3)';
+        formMsg.style.color = '#00ff88';
+        formMsg.textContent = '// Message sent. 48時間以内にご返信します。';
+        contactForm.reset();
+        submitBtn.textContent = '[ SENT ✓ ]';
+      } else {
+        throw new Error('Send failed');
+      }
+    } catch(err) {
+      formMsg.style.display = 'block';
+      formMsg.style.background = 'rgba(248,81,73,0.08)';
+      formMsg.style.border = '1px solid rgba(248,81,73,0.3)';
+      formMsg.style.color = '#f85149';
+      formMsg.textContent = '// Error. 送信に失敗しました。お手数ですがメールにてご連絡ください。';
+      submitBtn.textContent = '[ SEND MESSAGE ]';
+      submitBtn.disabled = false;
+    }
   });
 }
 
