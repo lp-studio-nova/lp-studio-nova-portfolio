@@ -14,7 +14,7 @@
   --dark: #1a1a1a;
   --gray-dark: #444;
   --gray: #888;
-  --gray-light: #bbb;
+  --gray-light: #ccc;
   --border: #e8e8e8;
   --bg: #fafafa;
   --white: #ffffff;
@@ -34,17 +34,17 @@ body {
 /* ── HEADER ── */
 header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
-  height: 60px;
+  height: 64px;
   display: flex; align-items: center;
   padding: 0 48px;
   justify-content: space-between;
 }
 .header-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 18px; font-weight: 600; letter-spacing: 0.06em;
+  font-size: 19px; font-weight: 600; letter-spacing: 0.06em;
   color: var(--black); text-decoration: none;
 }
 .header-logo span { color: var(--accent); }
@@ -56,253 +56,266 @@ nav a {
 nav a:hover { color: var(--black); }
 .nav-contact {
   border: 1px solid var(--black);
-  padding: 7px 18px; font-size: 10px;
+  padding: 8px 20px; font-size: 10px;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--black) !important; transition: all 0.2s !important;
+  color: var(--black) !important; transition: all 0.25s !important;
 }
 .nav-contact:hover { background: var(--black); color: var(--white) !important; }
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
-.hamburger span { width: 20px; height: 1px; background: var(--black); display: block; }
+.hamburger span { width: 22px; height: 1px; background: var(--black); display: block; }
 
-/* ── HERO ── */
+/* ── HERO (フルビジュアル版) ── */
 .hero {
   min-height: 100vh;
-  padding-top: 60px;
+  padding-top: 64px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 55% 45%;
+  position: relative;
 }
 .hero-left {
   display: flex; flex-direction: column;
   justify-content: center;
   padding: 80px 64px 80px 48px;
-  border-right: 1px solid var(--border);
+  position: relative; z-index: 1;
 }
 .hero-eyebrow {
-  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 28px;
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
 }
-.hero-eyebrow::before {
-  content: ''; width: 32px; height: 1px; background: var(--accent);
-}
+.hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--accent); }
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(40px, 4.5vw, 64px);
-  font-weight: 400; line-height: 1.2;
+  font-size: clamp(42px, 4.8vw, 68px);
+  font-weight: 400; line-height: 1.18;
   margin-bottom: 32px;
-  animation: fadeUp 0.9s ease both;
+  opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
 }
-.hero-title em { font-style: italic; color: var(--accent); }
+.hero-title em { font-style: italic; color: var(--accent); display: block; }
 .hero-desc {
-  font-size: 14px; line-height: 2.2; color: var(--gray-dark);
-  max-width: 420px; margin-bottom: 48px;
-  animation: fadeUp 0.9s 0.15s ease both;
+  font-size: 13px; line-height: 2.3; color: var(--gray-dark);
+  max-width: 400px; margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 0.9s 0.5s ease forwards;
 }
 .hero-cta {
   display: flex; gap: 16px; flex-wrap: wrap;
-  animation: fadeUp 0.9s 0.3s ease both;
+  opacity: 0; animation: fadeUp 0.9s 0.65s ease forwards;
 }
 .btn-primary {
   display: inline-block;
   background: var(--black); color: var(--white);
-  padding: 14px 36px; font-size: 11px;
-  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 15px 40px; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
   text-decoration: none; transition: background 0.25s;
 }
 .btn-primary:hover { background: var(--accent); }
 .btn-secondary {
   display: inline-block;
-  border: 1px solid var(--border);
-  color: var(--gray-dark);
-  padding: 14px 36px; font-size: 11px;
-  letter-spacing: 0.16em; text-transform: uppercase;
+  border: 1px solid var(--border); color: var(--gray-dark);
+  padding: 15px 40px; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
   text-decoration: none; transition: all 0.25s;
 }
 .btn-secondary:hover { border-color: var(--black); color: var(--black); }
+
+/* HERO RIGHT — 画像コラージュ */
 .hero-right {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: fadeIn 1.2s 0.4s ease forwards;
 }
-.hero-stat-block {
-  display: flex; flex-direction: column;
-  justify-content: center; padding: 48px;
-  border-bottom: 1px solid var(--border);
-  animation: fadeIn 1s 0.4s ease both;
+.hero-img-main {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
 }
-.hero-stat-block:last-child { border-bottom: none; background: var(--bg); }
-.stat-number {
+.hero-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--white) 0%, rgba(255,255,255,0.1) 30%, transparent 60%);
+}
+.hero-img-card {
+  position: absolute; bottom: 48px; right: 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 28px;
+  border-left: 3px solid var(--accent);
+  animation: fadeUp 1s 0.9s ease both;
+}
+.hero-img-card-num {
   font-family: 'Playfair Display', serif;
-  font-size: 64px; font-weight: 400;
-  line-height: 1; color: var(--black);
-  margin-bottom: 8px;
+  font-size: 36px; font-weight: 400; color: var(--black); line-height: 1;
 }
-.stat-number span { font-size: 28px; color: var(--accent); }
-.stat-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); }
-.stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 12px; line-height: 1.8; }
+.hero-img-card-num span { font-size: 16px; color: var(--accent); }
+.hero-img-card-label {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-top: 4px;
+}
 
 /* ── MARQUEE ── */
-.marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px 0; overflow: hidden; background: var(--bg); }
-.marquee-track { display: flex; white-space: nowrap; animation: marquee 28s linear infinite; }
-.marquee-track span { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; padding: 0 36px; color: var(--gray); }
-.marquee-track .dot { color: var(--accent); font-size: 16px; padding: 0 16px; }
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 15px 0; overflow: hidden; background: var(--bg);
+}
+.marquee-track {
+  display: flex; white-space: nowrap;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track span {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0 36px; color: var(--gray);
+}
+.marquee-track .dot { color: var(--accent); padding: 0 16px; font-size: 16px; }
 
-/* ── SECTION ── */
-.section { padding: 96px 48px; }
-.section-header { margin-bottom: 56px; }
+/* ── WORKS PREVIEW ── */
+.works-preview { padding: 96px 48px; background: var(--white); }
+.section-header { margin-bottom: 56px; display: flex; justify-content: space-between; align-items: flex-end; }
+.section-header-left {}
 .section-eyebrow {
-  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 14px;
   display: flex; align-items: center; gap: 12px;
 }
 .section-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
 .section-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 400; line-height: 1.2;
+  font-size: clamp(28px, 3.5vw, 44px); font-weight: 400; line-height: 1.2;
 }
 .section-title em { font-style: italic; color: var(--accent); }
+.see-all {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray); text-decoration: none; border-bottom: 1px solid var(--border);
+  padding-bottom: 2px; transition: all 0.2s; white-space: nowrap; margin-bottom: 6px;
+}
+.see-all:hover { color: var(--black); border-color: var(--black); }
 
-/* ── SERVICES (カテゴリ) ── */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  background: var(--border);
-}
-.service-card {
-  background: var(--white);
-  padding: 52px 48px;
-  text-decoration: none; color: inherit;
-  display: block; position: relative;
-  transition: background 0.25s;
-  overflow: hidden;
-}
-.service-card::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0;
-  width: 0; height: 2px;
-  background: var(--accent);
-  transition: width 0.4s ease;
-}
-.service-card:hover { background: var(--bg); }
-.service-card:hover::after { width: 100%; }
-.service-card:hover .service-arrow { transform: translate(4px, -4px); }
-.service-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 48px; font-weight: 400;
-  color: var(--border); line-height: 1;
-  margin-bottom: 28px;
-  transition: color 0.25s;
-}
-.service-card:hover .service-num { color: var(--accent-light); }
-.service-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 400;
-  margin-bottom: 8px;
-}
-.service-name-ja { font-size: 13px; color: var(--gray); margin-bottom: 20px; letter-spacing: 0.06em; }
-.service-desc { font-size: 12px; line-height: 2; color: var(--gray-dark); max-width: 320px; }
-.service-count {
-  margin-top: 24px;
-  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent);
-}
-.service-arrow {
-  position: absolute; top: 48px; right: 48px;
-  font-size: 20px; color: var(--gray-light);
-  transition: transform 0.3s;
-}
-
-/* ── ABOUT ── */
-.about { background: var(--black); color: var(--white); }
-.about-inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
-}
-.about .section-eyebrow { color: var(--accent); }
-.about .section-eyebrow::before { background: var(--accent); }
-.about .section-title { color: var(--white); }
-.about-body { font-size: 13px; line-height: 2.4; color: rgba(255,255,255,0.6); margin-top: 24px; }
-.about-right { display: flex; flex-direction: column; gap: 2px; }
-.about-item {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 28px 32px;
-  display: flex; align-items: flex-start; gap: 20px;
-}
-.about-item-icon { font-size: 20px; margin-top: 2px; flex-shrink: 0; }
-.about-item-title { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-.about-item-desc { font-size: 11px; line-height: 1.9; color: rgba(255,255,255,0.5); }
-
-/* ── FLOW ── */
-.flow-grid {
+/* WORKS グリッド（ホームプレビュー用） */
+.preview-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2px; background: var(--border);
 }
-.flow-item {
-  background: var(--white);
-  padding: 40px 36px;
-  position: relative;
+.preview-card {
+  background: var(--white); text-decoration: none; color: inherit;
+  display: block; overflow: hidden; position: relative;
+  transition: transform 0.3s;
 }
+.preview-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.preview-card:hover .preview-img img { transform: scale(1.05); }
+.preview-card:hover .preview-overlay { opacity: 1; }
+.preview-img { aspect-ratio: 4/3; overflow: hidden; background: var(--bg); position: relative; }
+.preview-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+.preview-overlay {
+  position: absolute; inset: 0;
+  background: rgba(15,15,15,0.45);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+}
+.preview-overlay span {
+  border: 1px solid white; color: white;
+  padding: 9px 22px; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.preview-info { padding: 20px 22px 26px; }
+.preview-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.preview-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; line-height: 1.4; }
+
+/* ── SERVICES ── */
+.services-section { padding: 96px 48px; background: var(--bg); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 2px; background: var(--border);
+}
+.service-card {
+  background: var(--white); padding: 0;
+  text-decoration: none; color: inherit;
+  display: block; position: relative; overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+.service-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+.service-card:hover .service-img img { transform: scale(1.04); }
+.service-card:hover .service-arrow { transform: translate(4px,-4px); }
+.service-img { aspect-ratio: 16/9; overflow: hidden; position: relative; }
+.service-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+.service-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,15,15,0.6) 0%, transparent 60%);
+}
+.service-body { padding: 32px 36px 36px; }
+.service-num {
+  font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 400;
+  color: var(--border); line-height: 1; margin-bottom: 20px;
+}
+.service-name { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 400; margin-bottom: 6px; }
+.service-name-ja { font-size: 12px; color: var(--gray); margin-bottom: 16px; letter-spacing: 0.06em; }
+.service-desc { font-size: 12px; line-height: 2; color: var(--gray-dark); margin-bottom: 16px; }
+.service-count { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.service-arrow {
+  position: absolute; top: 28px; right: 28px;
+  font-size: 20px; color: var(--gray-light); transition: transform 0.3s;
+}
+
+/* ── ABOUT (ダーク) ── */
+.about { background: var(--black); color: var(--white); padding: 96px 48px; }
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about .section-eyebrow { color: var(--accent); }
+.about .section-eyebrow::before { background: var(--accent); }
+.about .section-title { color: var(--white); }
+.about-body { font-size: 13px; line-height: 2.4; color: rgba(255,255,255,0.58); margin-top: 24px; }
+.about-right { display: flex; flex-direction: column; gap: 2px; }
+.about-item {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  padding: 26px 30px; display: flex; align-items: flex-start; gap: 18px;
+  transition: background 0.2s;
+}
+.about-item:hover { background: rgba(255,255,255,0.07); }
+.about-item-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.about-item-title { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.about-item-desc { font-size: 11px; line-height: 1.9; color: rgba(255,255,255,0.45); }
+
+/* ── FLOW ── */
+.flow-section { padding: 96px 48px; }
+.flow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
+.flow-item { background: var(--white); padding: 40px 36px; position: relative; }
+.flow-item::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--border); transition: background 0.3s;
+}
+.flow-item:hover::before { background: var(--accent); }
 .flow-num {
   font-family: 'Playfair Display', serif;
-  font-size: 36px; font-weight: 400;
-  color: var(--accent-light); line-height: 1;
-  margin-bottom: 20px;
+  font-size: 38px; font-weight: 400; color: var(--accent-light); line-height: 1; margin-bottom: 20px;
 }
 .flow-title { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
 .flow-desc { font-size: 12px; line-height: 2; color: var(--gray-dark); }
 
 /* ── FOOTER ── */
-footer {
-  background: var(--black); color: var(--white);
-  padding: 64px 48px 40px;
-}
+footer { background: var(--black); color: var(--white); padding: 64px 48px 40px; }
 .footer-inner {
   display: grid; grid-template-columns: 1fr auto;
   gap: 48px; align-items: end;
-  margin-bottom: 48px;
-  padding-bottom: 48px;
+  margin-bottom: 48px; padding-bottom: 48px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.footer-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 600;
-  letter-spacing: 0.06em; margin-bottom: 12px;
-}
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 12px; }
 .footer-logo span { color: var(--accent); }
-.footer-tagline { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+.footer-tagline { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.9; }
 .footer-nav { display: flex; gap: 28px; flex-wrap: wrap; }
-.footer-nav a {
-  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s;
-}
+.footer-nav a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
 .footer-nav a:hover { color: var(--white); }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center;
-}
-.footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.06em; }
 
 /* モバイルメニュー */
-.mobile-menu {
-  position: fixed; inset: 0; background: var(--white); z-index: 150;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
-  transform: translateX(100%); transition: transform 0.35s ease;
-}
+.mobile-menu { position: fixed; inset: 0; background: var(--white); z-index: 150; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; transform: translateX(100%); transition: transform 0.35s ease; }
 .mobile-menu.open { transform: translateX(0); }
-.mobile-menu a {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px; font-weight: 400;
-  color: var(--black); text-decoration: none;
-}
-.mobile-close {
-  position: absolute; top: 18px; right: 24px;
-  background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray);
-}
+.mobile-menu a { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: var(--black); text-decoration: none; }
+.mobile-close { position: absolute; top: 18px; right: 24px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); }
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ANIMATIONS */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -312,15 +325,19 @@ footer {
   nav { display: none; }
   .hamburger { display: flex; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 64px 24px; border-right: none; border-bottom: 1px solid var(--border); }
-  .hero-right { grid-template-rows: auto auto; }
-  .hero-stat-block { padding: 40px 24px; }
-  .stat-number { font-size: 48px; }
+  .hero-right { height: 50vw; min-height: 280px; }
+  .hero-left { padding: 64px 24px 56px; }
   .services-grid { grid-template-columns: 1fr; }
   .about-inner { grid-template-columns: 1fr; gap: 48px; }
   .flow-grid { grid-template-columns: 1fr; }
-  .section { padding: 72px 24px; }
-  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .preview-grid { grid-template-columns: 1fr 1fr; }
+  .works-preview, .services-section, .about, .flow-section { padding: 72px 24px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  footer { padding: 48px 24px 32px; }
+}
+@media (max-width: 600px) {
+  .preview-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -335,9 +352,7 @@ footer {
     <a href="system.html">システム開発</a>
     <a href="#contact" class="nav-contact">Contact</a>
   </nav>
-  <button class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
@@ -353,7 +368,10 @@ footer {
 <section class="hero">
   <div class="hero-left">
     <p class="hero-eyebrow">Web Production Portfolio</p>
-    <h1 class="hero-title">戦略から実装まで、<br><em>一気通貫で。</em></h1>
+    <h1 class="hero-title">
+      戦略から実装まで、
+      <em>一気通貫で。</em>
+    </h1>
     <p class="hero-desc">KairosはWebディレクターとして、LP・コーポレートサイト・ECサイト・システム開発まで、クライアントの目的に合わせた最適なWeb制作を提供します。</p>
     <div class="hero-cta">
       <a href="lp.html" class="btn-primary">実績を見る</a>
@@ -361,15 +379,11 @@ footer {
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-stat-block">
-      <div class="stat-number">20<span>+</span></div>
-      <div class="stat-label">Works</div>
-      <div class="stat-desc">LP・コーポレート・EC・システム開発まで<br>幅広いジャンルの制作実績</div>
-    </div>
-    <div class="hero-stat-block">
-      <div class="stat-number">4<span>分野</span></div>
-      <div class="stat-label">Categories</div>
-      <div class="stat-desc">LP制作・コーポレートサイト・EC構築<br>・システム・アプリ開発に対応</div>
+    <img class="hero-img-main" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=85&auto=format&fit=crop" alt="Web制作イメージ" loading="eager">
+    <div class="hero-img-overlay"></div>
+    <div class="hero-img-card">
+      <div class="hero-img-card-num">20<span>+</span></div>
+      <div class="hero-img-card-label">Total Works</div>
     </div>
   </div>
 </section>
@@ -394,55 +408,126 @@ footer {
   </div>
 </div>
 
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="section-header">
-    <p class="section-eyebrow">Services</p>
-    <h2 class="section-title">制作<em>分野</em></h2>
+<!-- WORKS PREVIEW -->
+<section class="works-preview" id="works">
+  <div class="section-header reveal">
+    <div class="section-header-left">
+      <p class="section-eyebrow">Recent Works</p>
+      <h2 class="section-title">制作<em>実績</em></h2>
+    </div>
+    <a href="lp.html" class="see-all">すべて見る →</a>
   </div>
-  <div class="services-grid">
+  <div class="preview-grid reveal">
+    <a href="https://kairos-epsilon.github.io/recruit-driver-lp/" target="_blank" rel="noopener" class="preview-card">
+      <div class="preview-img">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80&auto=format&fit=crop" alt="ドライバー採用LP" loading="lazy">
+        <div class="preview-overlay"><span>View Site →</span></div>
+      </div>
+      <div class="preview-info">
+        <p class="preview-tag">採用LP</p>
+        <h3 class="preview-title">ドライバー採用LP</h3>
+      </div>
+    </a>
+    <a href="https://kairos-epsilon.github.io/beauty-lp/" target="_blank" rel="noopener" class="preview-card">
+      <div class="preview-img">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80&auto=format&fit=crop" alt="Beauty Salon LP" loading="lazy">
+        <div class="preview-overlay"><span>View Site →</span></div>
+      </div>
+      <div class="preview-info">
+        <p class="preview-tag">集客LP</p>
+        <h3 class="preview-title">Beauty Salon LP</h3>
+      </div>
+    </a>
+    <a href="https://kairos-epsilon.github.io/cotie-ec-demo/" target="_blank" rel="noopener" class="preview-card">
+      <div class="preview-img">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80&auto=format&fit=crop" alt="Cotie EC Demo" loading="lazy">
+        <div class="preview-overlay"><span>View Site →</span></div>
+      </div>
+      <div class="preview-info">
+        <p class="preview-tag">EC Demo</p>
+        <h3 class="preview-title">Cotie — ナチュラル雑貨EC</h3>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-header reveal">
+    <div class="section-header-left">
+      <p class="section-eyebrow">Services</p>
+      <h2 class="section-title">制作<em>分野</em></h2>
+    </div>
+  </div>
+  <div class="services-grid reveal">
     <a href="lp.html" class="service-card">
       <span class="service-arrow">↗</span>
-      <div class="service-num">01</div>
-      <h3 class="service-name">Landing Page</h3>
-      <p class="service-name-ja">LP制作</p>
-      <p class="service-desc">採用・集客・ブランディングを目的としたランディングページ。業種に合わせたデザインと成果を意識した導線設計を提供します。</p>
-      <p class="service-count">17 Works →</p>
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80&auto=format&fit=crop" alt="LP制作" loading="lazy">
+        <div class="service-img-overlay"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">01</div>
+        <h3 class="service-name">Landing Page</h3>
+        <p class="service-name-ja">LP制作</p>
+        <p class="service-desc">採用・集客・ブランディングを目的としたランディングページ。業種に合わせたデザインと成果を意識した導線設計を提供します。</p>
+        <p class="service-count">17 Works →</p>
+      </div>
     </a>
     <a href="corporate.html" class="service-card">
       <span class="service-arrow">↗</span>
-      <div class="service-num">02</div>
-      <h3 class="service-name">Corporate Site</h3>
-      <p class="service-name-ja">コーポレートサイト</p>
-      <p class="service-desc">企業・店舗の信頼感を高めるコーポレートサイト。ブランドイメージに合わせたデザインと、更新しやすい構成で制作します。</p>
-      <p class="service-count">1 Works →</p>
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop" alt="コーポレートサイト" loading="lazy">
+        <div class="service-img-overlay"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">02</div>
+        <h3 class="service-name">Corporate Site</h3>
+        <p class="service-name-ja">コーポレートサイト</p>
+        <p class="service-desc">企業・店舗の信頼感を高めるコーポレートサイト。ブランドイメージに合わせたデザインと更新しやすい構成で制作します。</p>
+        <p class="service-count">2 Works →</p>
+      </div>
     </a>
     <a href="ec.html" class="service-card">
       <span class="service-arrow">↗</span>
-      <div class="service-num">03</div>
-      <h3 class="service-name">EC & Implementation</h3>
-      <p class="service-name-ja">EC・フロントエンド実装</p>
-      <p class="service-desc">ECサイトのUI/UX設計・フロントエンド実装。商品一覧・詳細・カート導線まで、購買体験にこだわった構築が可能です。</p>
-      <p class="service-count">1 Works →</p>
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80&auto=format&fit=crop" alt="EC実装" loading="lazy">
+        <div class="service-img-overlay"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">03</div>
+        <h3 class="service-name">EC & Implementation</h3>
+        <p class="service-name-ja">EC・フロントエンド実装</p>
+        <p class="service-desc">ECサイトのUI/UX設計・フロントエンド実装。商品一覧・詳細・カート導線まで購買体験にこだわった構築が可能です。</p>
+        <p class="service-count">1 Works →</p>
+      </div>
     </a>
     <a href="system.html" class="service-card">
       <span class="service-arrow">↗</span>
-      <div class="service-num">04</div>
-      <h3 class="service-name">System Development</h3>
-      <p class="service-name-ja">システム・アプリ開発</p>
-      <p class="service-desc">予約管理・会員・決済システムなど複雑な要件にも対応。Next.js・Supabase等のモダンスタックで開発します。</p>
-      <p class="service-count">1 Works →</p>
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format&fit=crop" alt="システム開発" loading="lazy">
+        <div class="service-img-overlay"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">04</div>
+        <h3 class="service-name">System Development</h3>
+        <p class="service-name-ja">システム・アプリ開発</p>
+        <p class="service-desc">予約管理・会員・決済システムなど複雑な要件にも対応。Next.js・Supabase等のモダンスタックで開発します。</p>
+        <p class="service-count">1 Works →</p>
+      </div>
     </a>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section class="section about">
+<section class="about reveal">
   <div class="about-inner">
     <div>
       <div class="section-header" style="margin-bottom:0;">
-        <p class="section-eyebrow">About Kairos</p>
-        <h2 class="section-title" style="color:white;">Kairosが<br><em>選ばれる理由</em></h2>
+        <div>
+          <p class="section-eyebrow">About Kairos</p>
+          <h2 class="section-title" style="color:white;">Kairosが<br><em>選ばれる理由</em></h2>
+        </div>
       </div>
       <p class="about-body">Kairosは、Webディレクターを中心とした制作チームです。クライアントとの丁寧なコミュニケーションを起点に、要件定義から設計・実装・納品まで一貫して対応します。<br><br>単なる「作る」だけでなく、「目的を達成する」ための提案を大切にしています。</p>
     </div>
@@ -465,7 +550,7 @@ footer {
         <div class="about-item-icon">💬</div>
         <div>
           <p class="about-item-title">丁寧なコミュニケーション</p>
-          <p class="about-item-desc">制作中の不安をなくすため、進捗共有・修正対応を迅速に行います。</p>
+          <p class="about-item-desc">進捗共有・修正対応を迅速に行い、制作中の不安をなくします。</p>
         </div>
       </div>
     </div>
@@ -473,42 +558,20 @@ footer {
 </section>
 
 <!-- FLOW -->
-<section class="section" style="background: var(--bg);">
+<section class="flow-section reveal">
   <div class="section-header">
-    <p class="section-eyebrow">Flow</p>
-    <h2 class="section-title">制作の<em>流れ</em></h2>
+    <div class="section-header-left">
+      <p class="section-eyebrow">Flow</p>
+      <h2 class="section-title">制作の<em>流れ</em></h2>
+    </div>
   </div>
   <div class="flow-grid">
-    <div class="flow-item">
-      <div class="flow-num">01</div>
-      <h3 class="flow-title">ヒアリング</h3>
-      <p class="flow-desc">サービス内容・ターゲット・目的・ご予算をお聞きします。まずはお気軽にご相談ください。</p>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num">02</div>
-      <h3 class="flow-title">構成・設計</h3>
-      <p class="flow-desc">目的から逆算したページ構成・情報設計を行います。ワイヤーフレームで方向性をご確認いただきます。</p>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num">03</div>
-      <h3 class="flow-title">デザイン制作</h3>
-      <p class="flow-desc">ターゲットとブランドイメージに合わせたデザインを制作。修正対応もスピーディに行います。</p>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num">04</div>
-      <h3 class="flow-title">コーディング・実装</h3>
-      <p class="flow-desc">HTML/CSS/JSでの実装、またはWordPress・各種CMSへの組み込みに対応します。</p>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num">05</div>
-      <h3 class="flow-title">確認・修正</h3>
-      <p class="flow-desc">公開前に動作確認・表示確認を実施。細かな調整も丁寧に対応します。</p>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num">06</div>
-      <h3 class="flow-title">納品</h3>
-      <p class="flow-desc">HTML一式・サーバーアップロード・WordPress設置など、ご希望の形式で納品します。</p>
-    </div>
+    <div class="flow-item"><div class="flow-num">01</div><h3 class="flow-title">ヒアリング</h3><p class="flow-desc">サービス内容・ターゲット・目的・ご予算をお聞きします。</p></div>
+    <div class="flow-item"><div class="flow-num">02</div><h3 class="flow-title">構成・設計</h3><p class="flow-desc">目的から逆算したページ構成・情報設計を行います。</p></div>
+    <div class="flow-item"><div class="flow-num">03</div><h3 class="flow-title">デザイン制作</h3><p class="flow-desc">ターゲットとブランドイメージに合わせたデザインを制作します。</p></div>
+    <div class="flow-item"><div class="flow-num">04</div><h3 class="flow-title">コーディング・実装</h3><p class="flow-desc">HTML/CSS/JSでの実装、またはWordPress等への組み込みに対応。</p></div>
+    <div class="flow-item"><div class="flow-num">05</div><h3 class="flow-title">確認・修正</h3><p class="flow-desc">公開前に動作確認・表示確認を実施。細かな調整も丁寧に対応。</p></div>
+    <div class="flow-item"><div class="flow-num">06</div><h3 class="flow-title">納品</h3><p class="flow-desc">HTML一式・サーバーアップロード・WordPress設置など希望の形式で納品。</p></div>
   </div>
 </section>
 
@@ -535,6 +598,17 @@ footer {
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

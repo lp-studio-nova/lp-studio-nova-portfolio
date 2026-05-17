@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root { --black:#0f0f0f;--gray-dark:#444;--gray:#888;--gray-light:#bbb;--border:#e8e8e8;--bg:#fafafa;--white:#ffffff;--accent:#c4714a;--accent-light:#f0e8e3; }
+:root{--black:#0f0f0f;--gray-dark:#444;--gray:#888;--border:#e8e8e8;--bg:#fafafa;--white:#ffffff;--accent:#c4714a;--accent-light:#f0e8e3;}
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
 body{font-family:'Noto Sans JP',sans-serif;font-weight:300;background:var(--white);color:var(--black);overflow-x:hidden;}
 header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 48px;justify-content:space-between;}
@@ -21,6 +21,7 @@ nav a:hover,nav a.active{color:var(--black);}
 .nav-contact:hover{background:var(--black);color:var(--white)!important;}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
 .hamburger span{width:20px;height:1px;background:var(--black);display:block;}
+
 .page-hero{padding:120px 48px 64px;border-bottom:1px solid var(--border);background:var(--bg);}
 .breadcrumb{font-size:11px;letter-spacing:0.12em;color:var(--gray);margin-bottom:20px;}
 .breadcrumb a{color:var(--gray);text-decoration:none;}
@@ -30,26 +31,40 @@ nav a:hover,nav a.active{color:var(--black);}
 .page-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:400;line-height:1.2;margin-bottom:20px;}
 .page-title em{font-style:italic;color:var(--accent);}
 .page-desc{font-size:13px;line-height:2.2;color:var(--gray-dark);max-width:560px;}
-.works-section{padding:64px 48px 96px;}
-.works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);}
-.work-card{background:var(--white);text-decoration:none;color:inherit;display:block;position:relative;overflow:hidden;transition:transform 0.3s ease;}
-.work-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.1);}
-.work-card:hover .work-thumb img{transform:scale(1.04);}
-.work-card:hover .work-overlay{opacity:1;}
-.work-thumb{aspect-ratio:16/9;overflow:hidden;background:var(--bg);position:relative;}
-.work-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease;}
-.work-overlay{position:absolute;inset:0;background:rgba(15,15,15,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
-.work-overlay span{border:1px solid white;color:white;padding:10px 24px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;}
-.work-info{padding:28px 32px 36px;}
-.work-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.work-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:10px;line-height:1.4;}
-.work-desc{font-size:12px;line-height:2;color:var(--gray-dark);}
-.work-tech{margin-top:16px;display:flex;gap:6px;flex-wrap:wrap;}
-.tech-tag{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);padding:3px 10px;color:var(--gray);}
 
-/* 大きいカード */
-.work-card.featured{grid-column:span 2;}
-.work-card.featured .work-thumb{aspect-ratio:21/9;}
+.works-section{padding:72px 48px 96px;}
+
+/* 大カード */
+.work-featured{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--border);gap:2px;
+  margin-bottom:2px;
+  text-decoration:none;color:inherit;
+}
+.feat-thumb{overflow:hidden;position:relative;min-height:420px;background:var(--bg);}
+.feat-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease;}
+.work-featured:hover .feat-thumb img{transform:scale(1.03);}
+.work-featured:hover .feat-overlay{opacity:1;}
+.feat-overlay{position:absolute;inset:0;background:rgba(15,15,15,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
+.feat-overlay span{border:1px solid white;color:white;padding:10px 24px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;}
+.feat-body{background:var(--white);padding:52px 52px;display:flex;flex-direction:column;justify-content:center;}
+.work-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.work-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;margin-bottom:8px;line-height:1.3;}
+.work-subtitle{font-size:12px;color:var(--gray);margin-bottom:20px;letter-spacing:0.06em;}
+.work-desc{font-size:12px;line-height:2.2;color:var(--gray-dark);margin-bottom:24px;}
+.work-tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
+.tech-tag{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);padding:3px 10px;color:var(--gray);}
+.view-btn{display:inline-block;background:var(--black);color:var(--white);padding:13px 32px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;transition:background 0.25s;align-self:flex-start;}
+.view-btn:hover{background:var(--accent);}
+
+/* ポイントリスト */
+.point-list{list-style:none;margin-bottom:24px;}
+.point-list li{font-size:12px;line-height:1.8;color:var(--gray-dark);padding:6px 0 6px 18px;position:relative;border-bottom:1px solid var(--border);}
+.point-list li:last-child{border-bottom:none;}
+.point-list li::before{content:'—';position:absolute;left:0;color:var(--accent);}
+
+/* 区切り */
+.divider{height:2px;background:var(--border);margin:0 0 2px;}
 
 footer{background:var(--black);color:var(--white);padding:48px;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;}
@@ -59,11 +74,23 @@ footer{background:var(--black);color:var(--white);padding:48px;}
 .footer-nav{display:flex;gap:24px;}
 .footer-nav a{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
 .footer-nav a:hover{color:var(--white);}
+
 .mobile-menu{position:fixed;inset:0;background:var(--white);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(100%);transition:transform 0.35s ease;}
 .mobile-menu.open{transform:translateX(0);}
 .mobile-menu a{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--black);text-decoration:none;}
 .mobile-close{position:absolute;top:18px;right:24px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--gray);}
-@media(max-width:960px){header{padding:0 24px;}nav{display:none;}.hamburger{display:flex;}.page-hero{padding:100px 24px 48px;}.works-section{padding:40px 24px 72px;}.works-grid{grid-template-columns:1fr;}.work-card.featured{grid-column:span 1;}.work-card.featured .work-thumb{aspect-ratio:16/9;}footer{padding:40px 24px;}.footer-bottom{flex-direction:column;gap:20px;text-align:center;}.footer-nav{flex-wrap:wrap;justify-content:center;}}
+
+@media(max-width:960px){
+  header{padding:0 24px;}nav{display:none;}.hamburger{display:flex;}
+  .page-hero{padding:100px 24px 48px;}
+  .works-section{padding:40px 24px 72px;}
+  .work-featured{grid-template-columns:1fr;}
+  .feat-thumb{min-height:260px;}
+  .feat-body{padding:36px 28px;}
+  footer{padding:40px 24px;}
+  .footer-bottom{flex-direction:column;gap:20px;text-align:center;}
+  .footer-nav{flex-wrap:wrap;justify-content:center;}
+}
 </style>
 </head>
 <body>
@@ -86,33 +113,74 @@ footer{background:var(--black);color:var(--white);padding:48px;}
   <a href="ec.html" onclick="toggleMenu()">EC・実装</a>
   <a href="system.html" onclick="toggleMenu()">システム開発</a>
 </div>
+
 <div class="page-hero">
   <p class="breadcrumb"><a href="index.html">Home</a> / コーポレートサイト</p>
   <p class="page-eyebrow">Corporate Site</p>
   <h1 class="page-title">コーポレートサイト<em>実績</em></h1>
-  <p class="page-desc">企業・店舗の信頼感を高めるコーポレートサイト制作実績です。ブランドイメージに合わせたデザインと、更新しやすい構成を重視して制作しています。</p>
+  <p class="page-desc">企業・サービスの信頼感を高めるコーポレートサイト・サービスサイト制作実績です。ブランドイメージに合わせたデザインと、目的に応じた情報設計を重視して制作しています。</p>
 </div>
+
 <section class="works-section">
-  <div class="works-grid">
-    <a href="https://shibue-shoten.github.io/shibue320/" target="_blank" rel="noopener" class="work-card featured">
-      <div class="work-thumb">
-        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80&auto=format&fit=crop" alt="渋江商店コーポレートサイト" loading="lazy">
-        <div class="work-overlay"><span>View Site →</span></div>
+
+  <!-- 渋江商店 -->
+  <a href="https://shibue-shoten.github.io/shibue320/" target="_blank" rel="noopener" class="work-featured">
+    <div class="feat-thumb">
+      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=900&q=80&auto=format&fit=crop" alt="有限会社渋江商店" loading="lazy">
+      <div class="feat-overlay"><span>View Site →</span></div>
+    </div>
+    <div class="feat-body">
+      <p class="work-tag">Corporate Site / 運送・物流</p>
+      <h3 class="work-title">有限会社渋江商店</h3>
+      <p class="work-subtitle">産業廃棄物運搬・物流コーポレートサイト</p>
+      <p class="work-desc">創業27年、木質チップ・RPF等の産業廃棄物運搬を中心に地域の物流を支える有限会社渋江商店のコーポレートサイト。「信頼の運搬力」をブランドコンセプトに、実績・安全管理・サービス内容を明確に訴求する構成で制作。採用ページ・代表挨拶・アクセスまで一式を設計・実装しました。</p>
+      <ul class="point-list">
+        <li>木質チップ・RPF運搬サービスの訴求構成</li>
+        <li>採用情報・代表挨拶・アクセスページを含む多ページ構成</li>
+        <li>信頼感と地域密着感を重視したデザイン</li>
+        <li>スマートフォン対応（レスポンシブデザイン）</li>
+      </ul>
+      <div class="work-tech">
+        <span class="tech-tag">HTML/CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Responsive</span>
+        <span class="tech-tag">Multi-page</span>
+        <span class="tech-tag">GitHub Pages</span>
       </div>
-      <div class="work-info">
-        <p class="work-tag">Corporate Site</p>
-        <h3 class="work-title">渋江商店 コーポレートサイト</h3>
-        <p class="work-desc">老舗商店のリブランディングを目的としたコーポレートサイト。伝統と現代感を融合させたデザインで、信頼性と親しみやすさを両立した構成。会社概要・事業内容・お問い合わせまで一貫して設計。</p>
-        <div class="work-tech">
-          <span class="tech-tag">HTML/CSS</span>
-          <span class="tech-tag">JavaScript</span>
-          <span class="tech-tag">Responsive</span>
-          <span class="tech-tag">GitHub Pages</span>
-        </div>
+    </div>
+  </a>
+
+  <div class="divider"></div>
+
+  <!-- Writeful -->
+  <a href="https://writeful.academy/" target="_blank" rel="noopener" class="work-featured">
+    <div class="feat-thumb">
+      <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80&auto=format&fit=crop" alt="Writefulアカデミー" loading="lazy">
+      <div class="feat-overlay"><span>View Site →</span></div>
+    </div>
+    <div class="feat-body">
+      <p class="work-tag">Service Site / 教育・スクール</p>
+      <h3 class="work-title">Writefulアカデミー</h3>
+      <p class="work-subtitle">ライティングスクール サービスサイト</p>
+      <p class="work-desc">「書く力で、やりたい未来を叶える」をコンセプトに掲げるマンツーマンライティングスクールのサービスサイト。スクールの理念・特徴・コース・料金・よくある質問まで、入会検討者が必要とする情報を一つのページにまとめ、LINE相談への導線を軸に設計・実装しました。</p>
+      <ul class="point-list">
+        <li>ターゲット（書くことに悩む社会人）に響くコピーと構成</li>
+        <li>コース・料金・FAQ・相談フォームへの導線設計</li>
+        <li>温かみのあるトーンで信頼感・親しみやすさを両立</li>
+        <li>スマートフォン対応（レスポンシブデザイン）</li>
+      </ul>
+      <div class="work-tech">
+        <span class="tech-tag">HTML/CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Responsive</span>
+        <span class="tech-tag">LP設計</span>
+        <span class="tech-tag">LINE導線</span>
       </div>
-    </a>
-  </div>
+    </div>
+  </a>
+
 </section>
+
 <footer>
   <div class="footer-bottom">
     <div class="footer-logo">Kairos <span>Web Production</span></div>
